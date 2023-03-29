@@ -4,9 +4,6 @@ import pyscroll
 import pytmx
 from pytmx import TiledObject
 
-#r = pygame.Rect(0, 1, 2, 3)
-#print(r)
-
 
 @dataclass
 class Map:
