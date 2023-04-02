@@ -35,7 +35,9 @@ class MapManager:
             Portal(from_world='world', origin_point='enter_house', target_world='house',
                    teleport_point="spawn_house"),
             Portal(from_world='world', origin_point='enter_centre_pokemon', target_world='centre_pokemon',
-                   teleport_point="spawn_centre_pokemon")
+                   teleport_point="spawn_centre_pokemon"),
+            Portal(from_world='world', origin_point='enter_dungeon', target_world='dungeon',
+                   teleport_point="spawn_dungeon")
         ])
         self.register_map("house", portals=[
             Portal(from_world='house', origin_point='exit_house', target_world='world',
@@ -44,6 +46,10 @@ class MapManager:
         self.register_map("centre_pokemon", portals=[
             Portal(from_world='centre_pokemon', origin_point='exit_centre_pokemon', target_world='world',
                    teleport_point="exit_centre_pokemon")
+        ])
+        self.register_map('dungeon', portals=[
+            Portal(from_world='dungeon', origin_point='exit_dungeon', target_world='world',
+                   teleport_point="dungeon_exit_spawn")
         ])
 
         self.teleport_player("player")
