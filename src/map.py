@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import pygame
 import pyscroll
 import pytmx
-from pytmx import TiledObject
+
 
 @dataclass
 class Portal:
@@ -10,6 +10,7 @@ class Portal:
     origin_point: str
     target_world: str
     teleport_point: str
+
 
 @dataclass
 class Map:
@@ -31,14 +32,18 @@ class MapManager:
         self.current_map = "world"
 
         self.register_map("world", portals=[
-            Portal(from_world='world', origin_point='enter_house', target_world='house', teleport_point="spawn_house"),
-            Portal(from_world='world', origin_point='enter_centre_pokemon', target_world='centre_pokemon', teleport_point="spawn_centre_pokemon")
+            Portal(from_world='world', origin_point='enter_house', target_world='house',
+                   teleport_point="spawn_house"),
+            Portal(from_world='world', origin_point='enter_centre_pokemon', target_world='centre_pokemon',
+                   teleport_point="spawn_centre_pokemon")
         ])
         self.register_map("house", portals=[
-            Portal(from_world='house', origin_point='exit_house', target_world='world', teleport_point="enter_house_exit")
+            Portal(from_world='house', origin_point='exit_house', target_world='world',
+                   teleport_point="enter_house_exit")
         ])
         self.register_map("centre_pokemon", portals=[
-            Portal(from_world='centre_pokemon', origin_point='exit_centre_pokemon', target_world='world', teleport_point="exit_centre_pokemon")
+            Portal(from_world='centre_pokemon', origin_point='exit_centre_pokemon', target_world='world',
+                   teleport_point="exit_centre_pokemon")
         ])
 
         self.teleport_player("player")
@@ -88,18 +93,17 @@ class MapManager:
         # enregistrer la nouvelle carte chargée
         self.maps[name] = Map(name, walls, group, tmx_data, portals)
 
-        # definir le rect de collision pour entrer dans la maison
-#        enter_house = tmx_data.get_object_by_name('enter_house')
-#        self.enter_house_rect = pygame.rect.Rect(enter_house.x, enter_house.y, enter_house.width, enter_house.height)
+    def get_map(self):
+        return self.maps[self.current_map]
 
+    def get_group(self):
+        return self.get_map().group
 
-    def get_map(self): return self.maps[self.current_map]
+    def get_walls(self):
+        return self.get_map().walls
 
-    def get_group(self): return self.get_map().group
-
-    def get_walls(self): return self.get_map().walls
-
-    def get_object(self, name): return self.get_map().tmx_data.get_object_by_name(name)
+    def get_object(self, name):
+        return self.get_map().tmx_data.get_object_by_name(name)
 
     def draw(self):
         self.get_group().draw(self.screen)
